@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    environment:
+      - API_PORT
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_REGION
+      - MONGO_URL
+      - MONGO_DB_NAME
+      - MONGO_USERNAME
+      - MONGO_PASSWORD
+    ports:
+        - 4000:4000
+    networks:
+        - server-network
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      args:
+        - REACT_APP_API_URL=${API_URL}
+        - REACT_APP_API_PORT=${API_PORT}
+    environment:
+      - REACT_APP_API_URL=${API_URL}
+      - REACT_APP_API_PORT=${API_PORT}
+    ports:
+        - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+    restart: unless-stopped
+
+networks:
+    server-network:
