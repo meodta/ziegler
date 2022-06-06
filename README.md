@@ -41,3 +41,7 @@ MONGO_PASSWORD=example_pass
 ```
 2. Run `make dev-build`.
 3. Run `make dev-start`.
+4. Frontend will be running at `localhost:3000`, api at `localhost:4000` and db at `localhost:27017`.
+
+
+Good luck!
