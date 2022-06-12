@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import HomeView from 'views/Home';
+import RecipeView from 'views/Recipe';
+import Navbar from 'components/Navbar';
+import { ChakraProvider } from '@chakra-ui/react';
+import {NAV_PATHS} from 'helpers/navigation.helper';
 
 function App() {
+  const redirectHome = <Navigate to={'/'} />
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path={NAV_PATHS.root} element={<HomeView />}/>
+          <Route path={NAV_PATHS.home} element={redirectHome} />
+          <Route path={NAV_PATHS.recipe.path}>
+            <Route path={NAV_PATHS.recipe.routes.id} element={<RecipeView />} />
+            <Route path={''} element={redirectHome} />
+          </Route>
+          <Route path={'*'} element={redirectHome} />
+        </Routes>
+      </div>
+    </ChakraProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import { Auth0Provider } from '@auth0/auth0-react'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { BrowserRouter } from 'react-router-dom'
 
 import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from './constants'
 
@@ -16,7 +17,7 @@ root.render(
       redirectUri={window.location.origin}
       cacheLocation="localstorage"
     >
-      <App />
+      <BrowserRouter><App /></BrowserRouter>
     </Auth0Provider>
   </React.StrictMode>,
 )
